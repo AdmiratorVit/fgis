@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Обработка протоколов испытаний</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./CSS/main.css">
+
+    <link rel="icon" href="./img/favicon.svg" type="image/svg+xml">
+</head>
+<body class="no_scroll">
+<!-- для гита-->
+<div class="parent">
+    <div class="content">
+        <div class="parent__block1">
+            <div class="parent__block1_form">
+                <form id="form_authorization" method="post" action="protocol.php" enctype="multipart/form-data">
+                    <div class="parent__block1_title">Обработка протоколов испытаний</div>
+                    <div class="parent__block1_subtitle">Пожалуйста, загрузите файл протокола</div>
+                    <div class="inputBox">
+                        <input class="id_trainer_form_1" type="file" name="filename" accept=".xml" required/><br/><br/>
+                    </div>
+                    <div><input class="submit_authorization" type="submit" value="Загрузить файл"></div>
+                    <select id="fiosnils" class="fio" name="fio" onclick="fillSnils()">
+                        <option value="Бражников_Борис_Сергеевич_136-494-312 72" selected>Бражников Борис Сергеевич
+                        </option>
+                        <option value="Капустин_Вячеслав_Сергеевич_141-638-205 41">Капустин Вячеслав Сергеевич</option>
+                        <option value="Москаленко_Алексей_Борисович_156-512-256 55">Москаленко Алексей Борисович
+                        </option>
+                        <option value="Музыка_Артем_Олегович_145-463-224 55">Музыка Артем Олегович</option>
+                    </select>
+                </form>
+                <input id="snils" type="text" name="snils" disabled>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function fillSnils() {
+            let snilsInput = document.getElementById("snils");
+            let str = fiosnils.value;
+            let lastIndex = str.lastIndexOf("_");
+            console.log(lastIndex);
+            let snils_val = str.substring(lastIndex + 1, str.length);
+            snilsInput.value = snils_val;
+        }
+    </script>
+
+    <div class="footer_index">
+        <div class="QA">Название сервиса</div>
+        <div class="admirator">Coding by <a href="https://t.me/AdmiratorV">Admirator</a></div>
+    </div>
+</div>
+</body>
+</html>
