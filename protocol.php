@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
-    <title>BY ADMIRATOR</title>
-    <meta charset="utf-8"/>
+    <meta charset="UTF-8">
+    <title>Загрузка файла XML</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./CSS/main.css">
+    <link rel="icon" href="./img/favicon.svg" type="image/svg+xml">
 </head>
-<body>
+<body class="no_scroll">
 <?php
 
 require_once("final.php");
@@ -47,17 +50,29 @@ $res = parsing_fgis($tmp_protocol);
 unlink($tmp_protocol);
 
 ?>
-<h2>Загрузка файла</h2>
-<?php
-if ($upl == 1) {
-    echo "Файл обработан. <a href='$res'>Ссылка для скачивания</a>";
-    echo "<br />";
-    echo "<a href='index.html'>Вернуться назад</a>";
-    $upl = 0;
-} else {
-    $upl = 0;
-}
-?>
 
+<div class="parent">
+    <div class="content">
+        <div class="parent__block1">
+            <div class="parent__block1_form">
+                <div class="parent__block1_title">Загрузка файла XML</div>
+                <?php
+                if ($upl == 1) {
+                    echo "Файл обработан. <a href='$res' download>Ссылка для скачивания</a>";
+                    echo "<br />";
+                    echo "<a href='index.html'>Вернуться назад</a>";
+                    $upl = 0;
+                } else {
+                    $upl = 0;
+                }
+                ?>
+            </div>
+        </div>
+    </div>
+    <div class="footer_index">
+        <div class="QA">Название сервиса</div>
+        <div class="admirator">Coding by <a href="https://t.me/AdmiratorV">Admirator</a></div>
+    </div>
+</div>
 </body>
 </html>
