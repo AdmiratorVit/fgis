@@ -38,13 +38,24 @@ function parsing_fgis($tmp_protocol)
 
             $crawler = new Crawler($html);
             $modificationsi = $crawler->filter('body > div > div > div.content > div > div > div.col-md-34.col-sm-36.overlay-wrapper > div:nth-child(1) > div > table > tbody > tr:nth-child(5) > td:nth-child(2)')->text();
-            $checkdate = $crawler->filter('body > div > div > div.content > div > div > div.col-md-34.col-sm-36.overlay-wrapper > div:nth-child(2) > div > table > tbody > tr:nth-child(5) > td:nth-child(2)')->text();
-            $checkuntil = $crawler->filter('body > div > div > div.content > div > div > div.col-md-34.col-sm-36.overlay-wrapper > div:nth-child(2) > div > table > tbody > tr:nth-child(6) > td:nth-child(2)')->text();
-            $isgood = $crawler->filter('body > div > div > div.content > div > div > div.col-md-34.col-sm-36.overlay-wrapper > div:nth-child(2) > div > table > tbody > tr:nth-child(8) > td:nth-child(2)')->text();
+            $isgood_cond = $crawler->filter('body > div > div > div.content > div > div > div.col-md-34.col-sm-36.overlay-wrapper > div:nth-child(2) > div > table > tbody > tr:nth-child(6) > td:nth-child(1)')->text();
+            if ($isgood_cond == "СИ непригодно") {
+                $checkdate = $crawler->filter('body > div > div > div.content > div > div > div.col-md-34.col-sm-36.overlay-wrapper > div:nth-child(2) > div > table > tbody > tr:nth-child(4) > td:nth-child(2)')->text();
+                $checkuntil = null;
+                $isgood_conclusion = "no";
+            } else {
+                $checkdate = $crawler->filter('body > div > div > div.content > div > div > div.col-md-34.col-sm-36.overlay-wrapper > div:nth-child(2) > div > table > tbody > tr:nth-child(5) > td:nth-child(2)')->text();
+                $checkuntil = $crawler->filter('body > div > div > div.content > div > div > div.col-md-34.col-sm-36.overlay-wrapper > div:nth-child(2) > div > table > tbody > tr:nth-child(6) > td:nth-child(2)')->text();
+                $isgood_cond = $crawler->filter('body > div > div > div.content > div > div > div.col-md-34.col-sm-36.overlay-wrapper > div:nth-child(2) > div > table > tbody > tr:nth-child(8) > td:nth-child(1)')->text();
+                $isgood = $crawler->filter('body > div > div > div.content > div > div > div.col-md-34.col-sm-36.overlay-wrapper > div:nth-child(2) > div > table > tbody > tr:nth-child(8) > td:nth-child(2)')->text();
+                if ($isgood_cond == "СИ пригодно" && $isgood == "Да") {
+                    $isgood_conclusion = "yes";
+                }
+            }
 
             $checkdate = date('Y-m-d', strtotime($checkdate));
             $checkuntil = date('Y-m-d', strtotime($checkuntil));
-            $data[] = [trim($line), $checkdate, $checkuntil, $modificationsi, $isgood == "Да" ? 1 : 2, $f, $i, $o, $snils];
+            $data[] = [trim($line), $checkdate, $checkuntil, $modificationsi, $isgood_conclusion == "yes" ? 1 : 2, $f, $i, $o, $snils];
         }
     }
 
