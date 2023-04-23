@@ -37,13 +37,15 @@ function parsing_fgis($tmp_protocol)
             $html = $driver->getPageSource();
 
             $crawler = new Crawler($html);
-            $modificationsi = $crawler->filter('body > div > div > div.content > div > div > div.col-md-34.col-sm-36.overlay-wrapper > div:nth-child(1) > div > table > tbody > tr:nth-child(5) > td:nth-child(2)')->text();
+
             $isgood_cond = $crawler->filter('body > div > div > div.content > div > div > div.col-md-34.col-sm-36.overlay-wrapper > div:nth-child(2) > div > table > tbody > tr:nth-child(6) > td:nth-child(1)')->text();
             if ($isgood_cond == "СИ непригодно") {
+                $modificationsi = $crawler->filter('body > div > div > div.content > div > div > div.col-md-34.col-sm-36.overlay-wrapper > div:nth-child(1) > div > table > tbody > tr:nth-child(6) > td:nth-child(2)')->text();
                 $checkdate = $crawler->filter('body > div > div > div.content > div > div > div.col-md-34.col-sm-36.overlay-wrapper > div:nth-child(2) > div > table > tbody > tr:nth-child(4) > td:nth-child(2)')->text();
                 $checkuntil = null;
                 $isgood_conclusion = "no";
             } else {
+                $modificationsi = $crawler->filter('body > div > div > div.content > div > div > div.col-md-34.col-sm-36.overlay-wrapper > div:nth-child(1) > div > table > tbody > tr:nth-child(5) > td:nth-child(2)')->text();
                 $checkdate = $crawler->filter('body > div > div > div.content > div > div > div.col-md-34.col-sm-36.overlay-wrapper > div:nth-child(2) > div > table > tbody > tr:nth-child(5) > td:nth-child(2)')->text();
                 $checkuntil = $crawler->filter('body > div > div > div.content > div > div > div.col-md-34.col-sm-36.overlay-wrapper > div:nth-child(2) > div > table > tbody > tr:nth-child(6) > td:nth-child(2)')->text();
                 $isgood_cond = $crawler->filter('body > div > div > div.content > div > div > div.col-md-34.col-sm-36.overlay-wrapper > div:nth-child(2) > div > table > tbody > tr:nth-child(8) > td:nth-child(1)')->text();
