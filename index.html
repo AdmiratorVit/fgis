@@ -14,11 +14,14 @@
             <div class="parent__block1_form">
                 <form id="form_authorization" method="post" action="protocol.php" enctype="multipart/form-data">
                     <div class="parent__block1_title">Обработка протоколов испытаний</div>
-                    <div class="parent__block1_subtitle">Пожалуйста, загрузите файл протокола</div>
+<!--                    <div class="parent__block1_title">Обработка протоколов испытаний</div>-->
+<!--                    <div class="parent__block1_subtitle">Пожалуйста, загрузите файл протокола</div>-->
                     <div class="inputBox">
-                        <input class="id_trainer_form_1" type="file" name="filename" accept=".xml" required/><br/><br/>
+<!--                        <input class="id_trainer_form_1" type="file" name="filename" accept=".xml" required/><br/><br/>-->
+                        <input type="hidden" name="action" value="getFromArshin">
                     </div>
-                    <div><input class="submit_authorization" type="submit" value="Загрузить файл"></div>
+<!--                    <div><input class="submit_authorization" type="submit" value="Загрузить файл"></div>-->
+                    <div><input class="submit_authorization" type="submit" value="Получить данные из Аршина"></div>
                     <select id="fiosnils" class="fio" name="fio" onclick="fillSnils()">
                         <option value="Бражников_Борис_Сергеевич_13649431272" selected>Бражников Борис Сергеевич
                         </option>
@@ -38,14 +41,13 @@
             let snilsInput = document.getElementById("snils");
             let str = fiosnils.value;
             let lastIndex = str.lastIndexOf("_");
-            console.log(lastIndex);
             let snils_val = str.substring(lastIndex + 1, str.length);
             snilsInput.value = snils_val;
         }
     </script>
 
     <div class="footer_index">
-        <div class="QA">Название сервиса</div>
+        <div class="QA">Версия для API</div>
         <div class="admirator">Coding by <a href="https://t.me/AdmiratorV">Admirator</a></div>
     </div>
 </div>

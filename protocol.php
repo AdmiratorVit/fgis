@@ -9,47 +9,14 @@
 </head>
 <body class="no_scroll">
 <?php
+global$resultArrayNew;
+require_once("finalNew.php");
 
-require_once("final.php");
-
-if ($_FILES && $_FILES["filename"]["error"] == UPLOAD_ERR_OK) {
-    $name = $_FILES["filename"]["name"];
-
-    if (!is_dir(date('m'))) {
-        mkdir(date('m'));
-    }
-
-    move_uploaded_file($_FILES["filename"]["tmp_name"], $name);
-
-    if (rename($name, '.' . DIRECTORY_SEPARATOR . date('m') . DIRECTORY_SEPARATOR . $name)) {
-        $upl = 1;
-        $new_name = '.' . DIRECTORY_SEPARATOR . date('m') . DIRECTORY_SEPARATOR . $name;
-    }
-}
-
-$xml = simplexml_load_file("$new_name");
-$tmp_protocol = '.' . DIRECTORY_SEPARATOR . 'tmp' . DIRECTORY_SEPARATOR . 'protocol_' . time() . '.txt';
-
-$dir = '.' . DIRECTORY_SEPARATOR . 'tmp';
-$files = scandir($dir);
-
-foreach ($files as $file) {
-    if ($file != "." && $file != "..") {
-        $filepath = $dir . "/" . $file;
-        if (filemtime($filepath) < (time() - (3 * 24 * 60 * 60))) {
-            unlink($filepath);
-        }
-    }
-}
-
-foreach ($xml->xpath('//gost:globalID') as $record) {
-    file_put_contents($tmp_protocol, $record . PHP_EOL, FILE_APPEND);
-}
-
-$res = parsing_fgis($tmp_protocol);
-unlink($tmp_protocol);
+//$res = parsing_fgis($tmp_protocol);
+$res = jsonForEnd($resultArrayNew);
 
 ?>
+
 
 <div class="parent">
     <div class="content">
@@ -57,13 +24,13 @@ unlink($tmp_protocol);
             <div class="parent__block1_form">
                 <div class="parent__block1_title">Загрузка файла XML</div>
                 <?php
-                if ($upl == 1) {
+                if ($_SESSION['upl'] === true) {
                     echo "Файл обработан. <a href='$res' download>Ссылка для скачивания</a>";
                     echo "<br />";
                     echo "<a href='index.html'>Вернуться назад</a>";
-                    $upl = 0;
+                    unset ($_SESSION['upl']);
                 } else {
-                    $upl = 0;
+                    unset ($_SESSION['upl']);
                 }
                 ?>
             </div>
